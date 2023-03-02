@@ -7,5 +7,5 @@ import retrofit2.http.Url
 
 interface CurtApi {
     @GET
-    suspend fun getCurts(@Url host: String, @Header("api_key") key: String): List<Curt>?
+    suspend fun getCurts(@Url host: String, @Header("X-API-Key") key: String): List<Curt>?
 }

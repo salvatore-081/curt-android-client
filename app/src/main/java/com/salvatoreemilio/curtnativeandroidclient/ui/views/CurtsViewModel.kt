@@ -14,15 +14,15 @@ import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 
 
-class CurtsViewModelFactory(private val host: String, private val key: String) :
+class CurtsViewModelFactory(private val host: String, private val xAPIKey: String) :
     ViewModelProvider.NewInstanceFactory() {
-    override fun <T : ViewModel> create(modelClass: Class<T>): T = CurtsViewModel(host, key) as T
+    override fun <T : ViewModel> create(modelClass: Class<T>): T = CurtsViewModel(host, xAPIKey) as T
 }
 
 class CurtsViewModel(host: String, key: String) : ViewModel() {
     private val _loading = MutableStateFlow<Boolean>(false)
     private var _host: String = host
-    private var _key: String = key
+    private var _xAPIKey: String = key
 
     val loading = _loading.asStateFlow()
 
@@ -40,7 +40,7 @@ class CurtsViewModel(host: String, key: String) : ViewModel() {
                 _loading.update { true }
                 try {
                     val curtApi = CurtRepository()
-                    val curts = curtApi.getCurts(_host, _key)
+                    val curts = curtApi.getCurts(_host, _xAPIKey)
                     curtsResponse = curts
                 } catch (e: Exception) {
                     err = e
@@ -51,12 +51,12 @@ class CurtsViewModel(host: String, key: String) : ViewModel() {
         }
     }
 
-    fun updateHost(host: String, key: String){
-        if (_host != host || _key != key){
+    fun updateHost(host: String, xAPIKey: String){
+        if (_host != host || _xAPIKey != xAPIKey){
             curtsResponse = null
             err = null
             _host = host
-            _key = key
+            _xAPIKey = xAPIKey
             getCurts()
         }
     }

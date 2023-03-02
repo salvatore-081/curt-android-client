@@ -13,7 +13,7 @@ class SettingsStore(private val context: Context) {
     companion object {
         private val Context.dataStore: DataStore<Preferences> by preferencesDataStore("settingsStore")
         private val HOST = stringPreferencesKey("host")
-        private val KEY = stringPreferencesKey("key")
+        private val X_API_KEY = stringPreferencesKey("xAPIKey")
     }
 
     val getHost: Flow<String> =
@@ -23,9 +23,9 @@ class SettingsStore(private val context: Context) {
         context.dataStore.edit { preferences -> preferences[HOST] = host }
     }
 
-    val getKey: Flow<String> = context.dataStore.data.map { value: Preferences -> value[KEY] ?: "" }
+    val getXAPIKey: Flow<String> = context.dataStore.data.map { value: Preferences -> value[X_API_KEY] ?: "" }
 
-    suspend fun saveKey(key: String) {
-        context.dataStore.edit { preferences -> preferences[KEY] = key }
+    suspend fun saveXAPIKey(xAPIKey: String) {
+        context.dataStore.edit { preferences -> preferences[X_API_KEY] = xAPIKey }
     }
 }

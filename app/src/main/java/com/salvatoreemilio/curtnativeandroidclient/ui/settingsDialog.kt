@@ -44,10 +44,10 @@ fun SettingsDialogUI(modifier: Modifier = Modifier, openDialogCustom: MutableSta
     val context = LocalContext.current
     val store = SettingsStore(context)
     val host = remember { mutableStateOf("") }
-    val key = remember { mutableStateOf("") }
+    val xAPIKey = remember { mutableStateOf("") }
 
     host.value = runBlocking { store.getHost.first() }
-    key.value = runBlocking { store.getKey.first() }
+    xAPIKey.value = runBlocking { store.getXAPIKey.first() }
 
     Card(
         shape = RoundedCornerShape(10.dp),
@@ -68,7 +68,7 @@ fun SettingsDialogUI(modifier: Modifier = Modifier, openDialogCustom: MutableSta
                 )
                 TextFieldUI("Host", host)
                 Spacer(modifier = modifier.height(5.dp))
-                TextFieldUI(label = "Key", state = key)
+                TextFieldUI(label = "X-API-Key", state = xAPIKey)
             }
             Row(
                 Modifier
@@ -81,7 +81,7 @@ fun SettingsDialogUI(modifier: Modifier = Modifier, openDialogCustom: MutableSta
                 androidx.compose.material3.TextButton(onClick = {
                     CoroutineScope(Dispatchers.IO).launch {
                         store.saveHost(host.value)
-                        store.saveKey(key.value)
+                        store.saveXAPIKey(xAPIKey.value)
                     }
                     if (host.value.isBlank()) {
                         Toast.makeText(context, "Host is required!", Toast.LENGTH_SHORT).show()

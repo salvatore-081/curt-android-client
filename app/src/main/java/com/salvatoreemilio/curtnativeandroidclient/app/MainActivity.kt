@@ -41,10 +41,10 @@ class MainActivity : ComponentActivity() {
         val context = LocalContext.current
         val store = SettingsStore(context)
         val host = store.getHost.collectAsState(initial = "")
-        val key = store.getKey.collectAsState(initial = "")
+        val xAPIKey = store.getXAPIKey.collectAsState(initial = "")
         if (host.value.isNotBlank()) {
-            val curtsViewModel by viewModels<CurtsViewModel> { CurtsViewModelFactory(host.value, key.value) }
-            curtsViewModel.updateHost(host.value, key.value)
+            val curtsViewModel by viewModels<CurtsViewModel> { CurtsViewModelFactory(host.value, xAPIKey.value) }
+            curtsViewModel.updateHost(host.value, xAPIKey.value)
             Box(modifier = Modifier.padding(p)) {
                 CurtsList(curtsViewModel)
             }
