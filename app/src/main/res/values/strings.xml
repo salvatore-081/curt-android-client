@@ -1,0 +1,4 @@
+<resources>
+    <string name="app_name">CurtNativeAndroidClient</string>
+    <string name="title_activity_curts_list">CurtsList</string>
+</resources>
